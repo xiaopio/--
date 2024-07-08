@@ -1,0 +1,45 @@
+{
+  "pages": [
+    "pages/cheliang/cheliang",
+    "pages/siji/siji",
+    "pages/login/login"
+  ],
+  "tabBar": {
+    "color": "#333",
+    "selectedColor": "#ff0000",
+    "backgroundColor": "#f5f5f5",
+    "list": [{
+      "pagePath": "pages/cheliang/cheliang",
+      "text": "租车",
+      "iconPath":"/images/bi.png",
+      "selectedIconPath":"/images/bi.png"
+    },{
+      "pagePath": "pages/siji/siji",
+      "text": "还车",
+      "iconPath":"/images/close.png",
+      "selectedIconPath":"/images/close.png"
+    },{
+      "pagePath": "pages/login/login",
+      "text": "登录",
+      "iconPath":"/images/my1.png",
+      "selectedIconPath":"/images/my1.png"
+    }]
+  },
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
+  },
+  "style": "v2",
+  "renderer": "skyline",
+  "rendererOptions": {
+    "skyline": {
+      "defaultDisplayBlock": true,
+      "disableABTest": true,
+      "sdkVersionBegin": "3.0.0",
+      "sdkVersionEnd": "15.255.255"
+    }
+  },
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

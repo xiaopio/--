@@ -1,0 +1,49 @@
+ <swiper-item><view wx:if="{{fla}}">
+<view class="content" >
+  <view style="height: 50px;"></view>
+  <view class="t-a">
+    <view class="line"></view>
+    <input class="inputText" bindinput="inputMingcheng" placeholder="名称"  placeholder-style="color:#999999;"/>
+  </view>
+  <view class="t-a">
+    <view class="line"></view>
+    <input class="inputText" bindinput="inputJialing" placeholder="驾龄"  placeholder-style="color:#999999;"/>
+  </view>
+  <view class="t-a">
+    <view class="line"></view>
+    <input class="inputText" bindinput="inputJiazhaodengji" placeholder="驾照登记"  placeholder-style="color:#999999;"/>
+  </view>
+  <view class="t-a">
+    <view class="line"></view>
+    <input class="inputText" bindinput="inputName" placeholder="用户名"  placeholder-style="color:#999999;"/>
+  </view>
+
+  <view class="t-a">
+    <view class="line"></view>
+    <input bindinput="inputPassword" class="inputText" placeholder="密码" password/>
+  </view>
+
+<view class="hr"></view>
+<view class="loginBtnView"> 
+  <button class="btn" type="primary" bindtap="reg">注册</button> 
+  <button class="btn" type="primary" bindtap="dl">登录</button> 
+ </view>
+ 
+</view>
+</view>
+<view wx:else>
+  <view class="page-body"style="width: 100%;margin-top: 100px">
+    <view style="margin-top:10px; padding:10px; background:#eeeeee;">
+      <view class="t-a">
+      <image style="width: 50px;height: 50px;" src="../../images/kefu.png"></image>
+      <view class="line"></view>
+      <view style="color: brown;width: 50%;margin-left: 30%;">当前登录人{{loginname}}</view>
+    </view>
+  <view class="loginBtnView"> 
+  <button class="btn" type="primary" bindtap="tuichu">退出</button> 
+ </view>
+
+    </view>
+  </view>
+</view>
+</swiper-item>

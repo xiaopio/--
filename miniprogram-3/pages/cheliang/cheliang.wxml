@@ -1,0 +1,18 @@
+<view class="content" >
+  
+  <view style="height: 50px;"></view>
+  <text style="width: 20%;display: inline-block">名称</text>
+  <text style="width: 20%;display: inline-block">品牌</text>
+  <!-- <text style="width: 15%;display: inline-block">价格</text>
+  <text style="width: 15%;display: inline-block">车牌号</text> -->
+  <text style="width: 15%;display: inline-block">状态</text>
+  <text style="width: 30%;display: inline-block">租车</text>
+  <view  wx:for="{{objectArray}}" wx:key="unique" style="display: block;">
+  <text style="width: 20%;display: inline-block; word-break: break-word;">{{item.mingcheng}}</text> 
+  <text style="width: 20%;display: inline-block; word-break: break-word;">{{item.pinpai}}</text> 
+  <!-- <text style="width: 15%;display: inline-block; word-break: break-word;">{{item.jiage}}</text> 
+  <text style="width: 15%;display: inline-block; word-break: break-word;">{{item.chepaihao}}</text>  -->
+  <text style="width: 15%;display: inline-block; word-break: break-word;">{{item.zhuangtai}}</text> 
+  <button style="width: 30%;display: inline-block; word-break: break-word;" class="btn" type="primary" bind:tap="reg" data-id='{{item.id}}'>租车</button>
+  </view >
+</view>
