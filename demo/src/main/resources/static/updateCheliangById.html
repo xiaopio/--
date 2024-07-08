@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <META http-equiv=Content-Type content="text/html;charset=utf-8">
+    <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+    <link rel="stylesheet"  type="text/css"  href="bootstrap.css" >
+    <title>Title</title>
+</head><style>img{
+    width: 100px;
+    height: 100px;
+}</style>
+<body>
+    <table id="table1" class="table table-hover">
+        <tr>
+            <td>车辆名称</td>
+            <td><input type="text" id="mingcheng" disabled name="mingcheng"></td>
+        </tr>
+        <tr>
+            <td>品牌</td>
+            <td><input type="text" id="pinpai" name="pinpai"></td>
+        </tr>
+        <tr>
+            <td>价格</td>
+            <td><input type="number" id="jiage" name="jiage"></td>
+        </tr>
+        <tr>
+            <td>车牌号</td>
+            <td><input type="text" id="chepaihao" name="chepaihao"></td>
+        </tr>
+    </table>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input id="btn-change-avatar" type="button" class="btn btn-primary" value="修改" />
+            <input onclick="rtv()" type="button" class="btn btn-primary" value="返回" />
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    }
+    var id = '';
+    $(function(){
+        //获取url携带的参数
+        id = getUrlParam("id");
+        $.ajax({
+            url: "/cheliang/selectOne",
+            type: "post",
+            async: false,
+            cache: false,
+            data: {
+                "id":id
+            },
+            dataType: "json",
+            "success":function(json) {
+                console.log(json);
+                $("#mingcheng").val(json.mingcheng);
+                $("#pinpai").val(json.pinpai);
+                $("#jiage").val(json.jiage)
+                $("#chepaihao").val(json.chepaihao);
+            }
+        })
+    })
+    function rtv(){
+        location.href="main.html";
+    }
+    $(document).ready(function() {
+        // 为按钮绑定单击事件
+        $("#btn-change-avatar").click(function() {
+            var pinpai = $("#pinpai").val();
+            var jiage = $("#jiage").val();
+            var chepaihao = $("#chepaihao").val();
+            $.ajax({
+                url: "/cheliang/updateCheliang",
+                type: "post",
+                async: false,
+                cache: false,
+                data: {"id": id,
+                    "pinpai": pinpai,
+                    "jiage": jiage,
+                    "chepaihao": chepaihao},
+                dataType: "text",
+                "success":function(json) {
+                    alert(json);
+                    if(json=='修改成功'){
+                        location.href="main.html";
+                    }
+                }
+            });
+        });
+    });
+</script>

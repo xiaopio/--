@@ -1,0 +1,63 @@
+车辆调度系统（车辆管理，车辆派单管理，司机管理，车辆归还管理）
+车辆管理
+	id、车辆名称、品牌、价格、车牌号、状态(已派、未派)
+车辆派单管理
+	id、车辆id、司机id、派单时间、 联系方式
+司机管理
+	id、司机名称、驾龄、驾照等级、司机状态
+车辆归还管理
+	id、车辆id、路线、车辆状态、开始时间、归还时间
+
+
+
+CREATE DATABASE test;
+USE test;
+CREATE TABLE USER (
+    id INT AUTO_INCREMENT,
+    NAME VARCHAR(20),
+    pass VARCHAR(20),
+    PRIMARY KEY (id)
+) DEFAULT CHARSET=UTF8;
+-- 车辆调度系统（车辆管理，车辆派单管理，司机管理，车辆归还管理）
+-- 车辆管理
+-- 	id、车辆名称、品牌、价格、车牌号、状态(已派、未派)
+CREATE TABLE cheliang (
+    id INT AUTO_INCREMENT,
+    mingcheng VARCHAR(20),
+    pinpai VARCHAR(20),
+    jiage VARCHAR(20),
+    chepaihao VARCHAR(20),
+    zhuangtai VARCHAR(20),
+    PRIMARY KEY (id)
+) DEFAULT CHARSET=UTF8;
+-- 车辆派单管理
+-- 	id、车辆id、司机id、派单时间、 联系方式
+CREATE TABLE cheliangpaidan (
+    id INT AUTO_INCREMENT,
+    cheliangid VARCHAR(20),
+    sijiid VARCHAR(20),
+    paidanshijian VARCHAR(20),
+    lianxifangshi VARCHAR(20),
+    PRIMARY KEY (id)
+) DEFAULT CHARSET=UTF8;
+-- 司机管理
+-- 	id、司机名称、驾龄、驾照等级、司机状态
+CREATE TABLE siji (
+    id INT AUTO_INCREMENT,
+    mingcheng VARCHAR(20),
+    jialing VARCHAR(20),
+    jiazhaodengji VARCHAR(20),
+    sijizhuangtai VARCHAR(20),
+    PRIMARY KEY (id)
+) DEFAULT CHARSET=UTF8;
+-- 车辆归还管理
+-- 	id、车辆id、路线、车辆状态、开始时间、归还时间
+CREATE TABLE cheliangguihuan (
+    id INT AUTO_INCREMENT,
+    chelinagid VARCHAR(20),
+    luxian VARCHAR(20),
+    cheliangzhuangtai VARCHAR(20),
+    kaishishijian VARCHAR(20),
+    guihuanshijian VARCHAR(20),
+    PRIMARY KEY (id)
+) DEFAULT CHARSET=UTF8;

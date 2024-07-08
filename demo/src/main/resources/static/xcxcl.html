@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head><style>
+    body {
+        background-image: url('2.jpg'); /* 替换为你的图片路径 */
+        background-size: cover; /* 背景图片覆盖整个页面 */
+        background-repeat: no-repeat; /* 背景图片不重复 */
+    }
+</style>
+    <META http-equiv=Content-Type content="text/html;charset=utf-8">
+    <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+    <link rel="stylesheet"  type="text/css"  href="bootstrap.css" >
+    <title>Title</title>
+    <style>img{
+        width: 100px;
+        height: 100px;
+    }</style>
+</head>
+<body>
+<h1>欢迎登录</h1>
+<a href="addCheliang.html" class="btn btn-info">车辆添加</a>
+<a href="paidan.html" class="btn btn-info">车辆派单管理</a>
+<a href="siji.html" class="btn btn-info">司机管理</a>
+<a href="guihuan.html" class="btn btn-info">车辆归还管理</a>
+<a href="main.html" class="btn btn-info">车辆管理</a>
+<a href="login.html" class="btn btn-info">退出登录</a>
+
+<table id="table1" class="table table-hover">
+
+</table>
+</body>
+</html>
+<script>
+    $(function () {
+        show();
+    })
+    function show(){
+        $.ajax({
+            url: "/cheliang/findAllXcx",
+            type: "post",
+            async: false,
+            cache: false,
+            dataType: "json",
+            "success": function (json) {
+                console.log(json)
+                var list = json;
+                var var1 = '';
+                var1 = var1+'<tr>';
+                var1 = var1+'<th>车辆名称</th>';
+                var1 = var1+'<th>司机名称</th>';
+                var1 = var1+'<th>派单时间</th>';
+                var1 = var1+'<th>状态</th>';
+                var1 = var1+'</tr>';
+                for(var i=0;i<list.length;i++){
+                    var obj = list[i];
+                    var1 = var1+'<tr>';
+                    var1 = var1+'<td>'+obj.clmc+'</td>';
+                    var1 = var1+'<td>'+obj.sjmc+'</td>';
+                    var1 = var1+'<td>'+obj.pdsj+'</td>';
+                    var1 = var1+'<td>'+obj.zt+'</td>';
+                    var1 = var1+'</tr>';
+                }
+                $("#table1").html(var1);
+            }
+        });
+    }
+
+</script>

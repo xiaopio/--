@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head><style>
+    body {
+        background-image: url('2.jpg'); /* 替换为你的图片路径 */
+        background-size: cover; /* 背景图片覆盖整个页面 */
+        background-repeat: no-repeat; /* 背景图片不重复 */
+    }
+</style>
+    <META http-equiv=Content-Type content="text/html;charset=utf-8">
+    <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+    <link rel="stylesheet"  type="text/css"  href="bootstrap.css" >
+    <title>Title</title>
+</head><style>img{
+    width: 100px;
+    height: 100px;
+}</style>
+<body>
+    <table id="table1" class="table table-hover">
+        <tr>
+            <td>名称</td>
+            <td><input type="text" id="mingcheng" disabled name="mingcheng"></td>
+        </tr>
+        <tr>
+            <td>驾龄</td>
+            <td><input type="text" id="jialing" name="jialing"></td>
+        </tr>
+        <tr>
+            <td>驾照等级</td>
+            <td><input type="text" id="jiazhaodengji" name="jiazhaodengji"></td>
+        </tr>
+        <tr>
+            <td>账号</td>
+            <td><input type="text" disabled id="zhanghao" name="zhanghao"></td>
+        </tr>
+        <tr>
+            <td>密码</td>
+            <td><input type="text" id="mima" name="mima"></td>
+        </tr>
+    </table>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input id="btn-change-avatar" type="button" class="btn btn-primary" value="修改" />
+            <input onclick="rtv()" type="button" class="btn btn-primary" value="返回" />
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    }
+    var id = '';
+    $(function(){
+        //获取url携带的参数
+        id = getUrlParam("id");
+        $.ajax({
+            url: "/siji/selectOne",
+            type: "post",
+            async: false,
+            cache: false,
+            data: {
+                "id":id
+            },
+            dataType: "json",
+            "success":function(json) {
+                console.log(json);
+                $("#mingcheng").val(json.mingcheng);
+                $("#jialing").val(json.jialing);
+                $("#jiazhaodengji").val(json.jiazhaodengji);
+                $("#zhanghao").val(json.zhanghao);
+                $("#mima").val(json.mima);
+            }
+        })
+    })
+    function rtv(){
+        location.href="siji.html";
+    }
+    $(document).ready(function() {
+        // 为按钮绑定单击事件
+        $("#btn-change-avatar").click(function() {
+            var jialing = $("#jialing").val();
+            var jiazhaodengji = $("#jiazhaodengji").val();
+            var mima = $("#mima").val();
+            $.ajax({
+                url: "/siji/updateSiji",
+                type: "post",
+                async: false,
+                cache: false,
+                data: {"id": id,
+                    "jialing": jialing,
+                    "jiazhaodengji": jiazhaodengji,
+                    "mima": mima},
+                dataType: "text",
+                "success":function(json) {
+                    alert(json);
+                    if(json=='修改成功'){
+                        location.href="siji.html";
+                    }
+                }
+            });
+        });
+    });
+</script>

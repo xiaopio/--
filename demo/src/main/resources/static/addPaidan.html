@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head><style>
+    body {
+        background-image: url('2.jpg'); /* 替换为你的图片路径 */
+        background-size: cover; /* 背景图片覆盖整个页面 */
+        background-repeat: no-repeat; /* 背景图片不重复 */
+    }
+</style>
+    <META http-equiv=Content-Type content="text/html;charset=utf-8">
+    <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+    <link rel="stylesheet"  type="text/css"  href="bootstrap.css" >
+    <title>Title</title>
+</head><style>img{
+    width: 100px;
+    height: 100px;
+}</style>
+<body>
+    <table id="table1" class="table table-hover">
+        <tr>
+            <div class="form-group">
+                <td><label for="clid" class="col-sm-2 control-label">车辆名称</label></td>
+                <td><div class="col-sm-10">
+                    <select id="clid" name="clmc" class="form-control"   >
+
+                    </select>
+                </div></td>
+            </div>
+        </tr>
+        <tr>
+            <div class="form-group">
+                <td><label for="sjid" class="col-sm-2 control-label">司机名称</label></td>
+                <td><div class="col-sm-10">
+                    <select id="sjid" name="clmc" class="form-control"   >
+
+                    </select>
+                </div></td>
+            </div>
+        </tr>
+        <tr>
+            <td><label for="lxfs" class="col-sm-2 control-label">联系方式</label></td>
+            <td><input type="text" id="lxfs" name="lxfs"></td>
+        </tr>
+    </table>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input id="btn-change-avatar" type="button" class="btn btn-primary" value="添加" />
+            <input onclick="rtv()" type="button" class="btn btn-primary" value="返回" />
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    $(function (){
+        //查询所有车辆
+        $.ajax({
+            url: "/cheliang/findAll",
+            type: "post",
+            async: false,
+            cache: false,
+            dataType: "json",
+            "success": function (json) {
+                console.log(json)
+                for(var i=0;i<json.length;i++){
+                    //拼接下拉选
+                    $("#clid").append("<option value='"+json[i].id+"'>"+json[i].mingcheng+"</option>");
+                }
+            }
+        })
+        //查询所有司机
+        $.ajax({
+            url: "/siji/findAll",
+            type: "post",
+            async: false,
+            cache: false,
+            dataType: "json",
+            "success": function (json) {
+                console.log(json)
+                for(var i=0;i<json.length;i++){
+                    //拼接下拉选
+                    $("#sjid").append("<option value='"+json[i].id+"'>"+json[i].mingcheng+"</option>");
+                }
+            }
+        })
+
+    })
+    function rtv(){
+        location.href="paidan.html";
+    }
+    $(document).ready(function() {
+        // 为按钮绑定单击事件
+        $("#btn-change-avatar").click(function() {
+            var clid = $("#clid").val();
+            var sjid = $("#sjid").val();
+            var lxfs = $("#lxfs").val();
+            $.ajax({
+                url: "/paidan/addPaidan",
+                type: "post",
+                async: false,
+                cache: false,
+                data: {"cheliangid": clid,
+                    "sijiid": sjid,
+                    "lianxifangshi": lxfs},
+                dataType: "text",
+                "success":function(json) {
+                    alert(json);
+                    if(json=='派单成功'){
+                        location.href="paidan.html";
+                    }
+                }
+            });
+        });
+    });
+</script>

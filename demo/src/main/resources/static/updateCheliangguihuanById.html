@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head><style>
+    body {
+        background-image: url('2.jpg'); /* 替换为你的图片路径 */
+        background-size: cover; /* 背景图片覆盖整个页面 */
+        background-repeat: no-repeat; /* 背景图片不重复 */
+    }
+</style>
+    <META http-equiv=Content-Type content="text/html;charset=utf-8">
+    <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+    <link rel="stylesheet"  type="text/css"  href="bootstrap.css" >
+    <title>Title</title>
+</head><style>img{
+    width: 100px;
+    height: 100px;
+}</style>
+<body>
+    <table id="table1" class="table table-hover">
+        <tr>
+            <td><label for="luxian" class="col-sm-2 control-label">车辆名称</label></td>
+            <td><input type="text" class="form-control"  name="clmc" disabled id="clmc" placeholder="clmc"></td>
+        </tr>
+        <tr>
+            <td><label for="luxian" class="col-sm-2 control-label">路线</label></td>
+            <td><input type="text" class="form-control"  name="luxian" id="luxian" placeholder="luxian"></td>
+        </tr>
+        <tr>
+            <td><label for="kaishishijian" class="col-sm-2 control-label">开始时间</label></td>
+            <td><input type="date" id="kaishishijian" name="kaishishijian"></td>
+        </tr>
+        <tr>
+            <td><label for="guihuanshijian" class="col-sm-2 control-label">归还时间</label></td>
+            <td><input type="date" id="guihuanshijian" name="guihuanshijian"></td>
+        </tr>
+    </table>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input id="btn-change-avatar" type="button" class="btn btn-primary" value="修改" />
+            <input onclick="rtv()" type="button" class="btn btn-primary" value="返回" />
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    }
+    var id = '';
+    $(function(){
+        //获取url携带的参数
+        id = getUrlParam("id");
+        $.ajax({
+            url: "/cheliangguihuan/selectOne",
+            type: "post",
+            async: false,
+            cache: false,
+            data: {
+                "id":id
+            },
+            dataType: "json",
+            "success":function(json) {
+                console.log(json);
+                $("#clmc").val(json.clmc);
+                $("#luxian").val(json.luxian);
+                $("#kaishishijian").val(json.kaishishijian)
+                $("#guihuanshijian").val(json.guihuanshijian)
+            }
+        })
+    })
+    function rtv(){
+        location.href="guihuan.html";
+    }
+    $(document).ready(function() {
+        // 为按钮绑定单击事件
+        $("#btn-change-avatar").click(function() {
+            var luxian = $("#luxian").val();
+            var kaishishijian = $("#kaishishijian").val();
+            var guihuanshijian = $("#guihuanshijian").val();
+            $.ajax({
+                url: "/cheliangguihuan/updateCheliangguihuan",
+                type: "post",
+                async: false,
+                cache: false,
+                data: {"id": id,
+                    "luxian": luxian,
+                    "kaishishijian": kaishishijian,
+                    "guihuanshijian": guihuanshijian},
+                dataType: "text",
+                "success":function(json) {
+                    alert(json);
+                    if(json=='修改成功'){
+                        location.href="guihuan.html";
+                    }
+                }
+            });
+        });
+    });
+</script>

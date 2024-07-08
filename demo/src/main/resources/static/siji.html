@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head><style>
+    body {
+        background-image: url('2.jpg'); /* 替换为你的图片路径 */
+        background-size: cover; /* 背景图片覆盖整个页面 */
+        background-repeat: no-repeat; /* 背景图片不重复 */
+    }
+</style>
+    <META http-equiv=Content-Type content="text/html;charset=utf-8">
+    <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+    <link rel="stylesheet"  type="text/css"  href="bootstrap.css" >
+    <title>Title</title>
+    <style>img{
+        width: 100px;
+        height: 100px;
+    }</style>
+</head>
+<body>
+<h1>欢迎登录</h1>
+<a href="addSiji.html" class="btn btn-info">司机添加</a>
+<a href="paidan.html" class="btn btn-info">车辆派单管理</a>
+<a href="main.html" class="btn btn-info">车辆管理</a>
+<a href="guihuan.html" class="btn btn-info">车辆归还管理</a>
+<a href="xcxcl.html" class="btn btn-info">小程序车辆管理</a>
+<a href="login.html" class="btn btn-info">退出登录</a>
+<h1>司机管理</h1>
+<div id="top">
+    <label>司机名称:</label><input type="text" id="mingcheng" name="mingcheng" class="form-control input-sm" placeholder="" aria-controls="example1">
+    <label><input type="button" onclick="show()" value="查询" class="btn btn-primary"></label>
+</div>
+<table id="table1" class="table table-hover">
+
+</table>
+</body>
+</html>
+<script>
+    $(function () {
+        show();
+    })
+    function show(){
+        var mingcheng = $("#mingcheng").val();
+        $.ajax({
+            url: "/siji/findAll",
+            type: "post",
+            data: {
+                "mingcheng":mingcheng,
+            },
+            async: false,
+            cache: false,
+            dataType: "json",
+            "success": function (json) {
+                console.log(json)
+                var list = json;
+                var var1 = '';
+                var1 = var1+'<tr>';
+                var1 = var1+'<th>名称</th>';
+                var1 = var1+'<th>驾龄</th>';
+                var1 = var1+'<th>驾照等级</th>';
+                var1 = var1+'<th>状态</th>';
+                var1 = var1+'<th>账号</th>';
+                var1 = var1+'<th>密码</th>';
+                var1 = var1+'<th>修改</th>';
+                var1 = var1+'<th>删除</th>';
+                var1 = var1+'</tr>';
+                for(var i=0;i<list.length;i++){
+                    var obj = list[i];
+                    var1 = var1+'<tr>';
+                    var1 = var1+'<td>'+obj.mingcheng+'</td>';
+                    var1 = var1+'<td>'+obj.jialing+'</td>';
+                    var1 = var1+'<td>'+obj.jiazhaodengji+'</td>';
+                    var1 = var1+'<td>'+obj.sijizhuangtai+'</td>';
+                    var1 = var1+'<td>'+obj.zhanghao+'</td>';
+                    var1 = var1+'<td>'+obj.mima+'</td>';
+                    var1 = var1+'<td><button onclick="f1('+obj.id+')" class="btn btn-info">修改</button></td>';
+                    var1 = var1+'<td><button onclick="f2('+obj.id+')" class="btn btn-info">删除</button></td>';
+                    var1 = var1+'</tr>';
+                }
+                $("#table1").html(var1);
+            }
+        });
+    }
+    function f1(id) {
+        location.href="updateSijiById.html?id="+id;
+    }
+    function f2(id){
+        $.ajax({
+            url: "/siji/deleteSiji",
+            type: "post",
+            async: false,
+            cache: false,
+            data: {
+                "id":id
+            },
+            dataType: "text",
+            "success": function (json) {
+                alert(json);
+                show();
+            }
+        })
+    }
+</script>
